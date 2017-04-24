@@ -7,10 +7,11 @@
     "test": "test"
   },
   "dependencies": {
-    "mongodb": "^2.2.26",
-     "cowsay": "^1.1.9"
+    "body-parser": "^1.17.1",
+    "cowsay": "^1.1.9",
+    "express": "^4.15.2",
+    "mongodb": "^2.2.26"
   },
-  
   "scripts": {
     "test": "mocha",
     "start": "nodemon server.js"
@@ -24,5 +25,10 @@
   "bugs": {
     "url": "https://github.com/cfpdx-401JS-spring-2017/first-half-stack/issues"
   },
-  "homepage": "https://github.com/cfpdx-401JS-spring-2017/first-half-stack#readme"
+  "homepage": "https://github.com/cfpdx-401JS-spring-2017/first-half-stack#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "morgan": "^1.8.1"
+  }
 }

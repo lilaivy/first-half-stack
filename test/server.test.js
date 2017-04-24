@@ -1,0 +1,54 @@
+const chai = require('chai');
+const assert = chai.assert;
+const chaiHttp = require('chai-http');
+chai.use(chaiHttp);
+
+const app = require('../lib/app');
+const connect = require('../lib/connect');
+const request = chai.request(app);
+
+const DB_URI = 'mongodb://localhost:27017/unicorns-test';
+
+
+const fakeHomie1 = {
+    name: 'fake',
+    likes: 'poser',
+};
+
+const fakeHomie2 = {
+    name: 'fake2',
+    likes: 'poser2',
+};
+
+describe('homies REST api', () => {
+
+
+    before(() => connect.connect(DB_URI));
+    before(() => connect.db.dropDatabase());
+    after(() => connect.close());
+
+    describe('POST /homies', () => {
+        it('saves a homie when we post', () => {
+            return request
+                .post('/homies')
+                .send(fakeHomie1)
+                .then(res => {
+                    console.log('res.body', res.body);
+                });
+        });
+    });
+
+    describe('GET /homies', () => {
+
+        it('returns array of all resources', () => {
+
+            return request
+                .get('/homies')
+                .then(res => { homiesArray })
+                .then(result => assert.deepEqual(homieArray, fakeHommies))
+        });
+
+    });
+
+});
+
