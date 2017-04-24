@@ -33,8 +33,14 @@ describe('homies REST api', () => {
                 .post('/homies')
                 .send(fakeHomie1)
                 .then(res => {
-                    console.log('res.body', res.body);
+                    return res.body;
+                })
+                .then(savedHomie => {
+                    assert.ok(savedHomie._id);
+                    fakeHomie1._id = savedHomie._id;
+                    assert.deepEqual(savedHomie, fakeHomie1);
                 });
+
         });
     });
 
