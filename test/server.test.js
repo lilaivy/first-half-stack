@@ -74,8 +74,20 @@ describe('homies REST api', () => {
                 });
         });
 
+        it('returns 404 not found if no resource found with that id', () => {
 
+            return request
+                .get('/homies/doesnotexist')
+                .then(
+                () => { 
+                    throw new Error('successful status code not expected');
+                },
 
+                res => { 
+                    assert.equal(res.status, 404);
+                    assert.ok(res.response.body.error);
+                });
+        });
 
     });
 
