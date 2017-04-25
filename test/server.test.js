@@ -10,12 +10,12 @@ const request = chai.request(app);
 const DB_URI = 'mongodb://localhost:27017/unicorns-test';
 
 
-const fakeHomie1 = {
+let fakeHomie1 = {
     name: 'fake',
     likes: 'poser',
 };
 
-const fakeHomie2 = {
+let fakeHomie2 = {
     name: 'fake2',
     likes: 'poser2',
 };
@@ -49,9 +49,15 @@ describe('homies REST api', () => {
         it('returns array of all resources', () => {
 
             return request
-                .get('/homies')
-                .then(res => { homiesArray })
-                .then(result => assert.deepEqual(homieArray, fakeHommies))
+            .post('/homies')
+            .send(fakeHomie2)
+            .then (res => res.body)
+            .then (savedHomie => {
+                fakeHomie2 = savedHomie;
+            })
+            .then(() => request.get('/homies'))
+                .then(res => res.body)
+                .then(homieArray => assert.deepEqual(homieArray, [fakeHomie1, fakeHomie2]));
         });
 
     });
