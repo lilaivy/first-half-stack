@@ -49,16 +49,33 @@ describe('homies REST api', () => {
         it('returns array of all resources', () => {
 
             return request
-            .post('/homies')
-            .send(fakeHomie2)
-            .then (res => res.body)
-            .then (savedHomie => {
-                fakeHomie2 = savedHomie;
-            })
-            .then(() => request.get('/homies'))
+                .post('/homies')
+                .send(fakeHomie2)
+                .then(res => res.body)
+                .then(savedHomie => {
+                    fakeHomie2 = savedHomie;
+                })
+                .then(() => request.get('/homies'))
                 .then(res => res.body)
                 .then(homieArray => assert.deepEqual(homieArray, [fakeHomie1, fakeHomie2]));
         });
+
+    });
+
+    describe('GET /homies/:id', () => {
+
+        it('returns the single object specified by the id', () => {
+
+            return request
+                .get(`/homies/${fakeHomie1._id}`)
+                .then(res => res.body)
+                .then(homie => {
+                    assert.deepEqual(homie, fakeHomie1);
+                });
+        });
+
+
+
 
     });
 
