@@ -22,7 +22,6 @@ let fakeHomie2 = {
 
 describe('homies REST api', () => {
 
-
     before(() => connect.connect(DB_URI));
     before(() => connect.db.dropDatabase());
     after(() => connect.close());
