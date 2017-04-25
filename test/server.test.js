@@ -20,6 +20,11 @@ let fakeHomie2 = {
     likes: 'poser2',
 };
 
+let fakeHomie3 = {
+    name: 'fake3',
+    likes: 'updated like',
+};
+
 describe('homies REST api', () => {
 
     before(() => connect.connect(DB_URI));
@@ -59,6 +64,20 @@ describe('homies REST api', () => {
                 .then(homieArray => assert.deepEqual(homieArray, [fakeHomie1, fakeHomie2]));
         });
 
+        it('updates homie data', () => {
+
+            const updatedName = fakeHomie2.name = 'chris';
+
+            return request
+                .put(`/homies/${fakeHomie2._id}`)
+                .send(fakeHomie2)
+                .then(() => request.get(`/homies/${fakeHomie2._id}`))
+                .then(res => res.body)
+                .then(savedHomie => assert.deepEqual(savedHomie.name, updatedName));
+
+
+        });
+
     });
 
     describe('GET /homies/:id', () => {
@@ -78,11 +97,11 @@ describe('homies REST api', () => {
             return request
                 .get('/homies/doesnotexist')
                 .then(
-                () => { 
+                () => {
                     throw new Error('successful status code not expected');
                 },
 
-                res => { 
+                res => {
                     assert.equal(res.status, 404);
                     assert.ok(res.response.body.error);
                 });
